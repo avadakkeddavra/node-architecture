@@ -25,7 +25,7 @@
 ```
  It will create a user.js file in `app/Models` folder. You can edit a file templates in cli.js
  
- - Also you can use all commands from `mysql-migrations`
+ - Also you can use all commands from `<a href="https://www.npmjs.com/package/mysql-migrations">mysql-migrations</a>`
  ```javascript
  node cli.js add create_table_users
 ```
