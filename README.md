@@ -24,7 +24,7 @@
  node cli.js make:model users
 ```
  It will create a user.js file in `app/Models` folder. You can edit a file templates in cli.js
- ** All available types for creation files trough CLI you can see at `package.json` in `_moduleAliases` field **
+ **All available types for creation files trough CLI you can see at `package.json` in `_moduleAliases` field**
  
  - Also you can use all commands from <a href="https://www.npmjs.com/package/mysql-migrations">`mysql-migrations`</a>
  ```javascript
