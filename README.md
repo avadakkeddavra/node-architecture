@@ -10,4 +10,9 @@
  
  > Starter pack of popular and usefull modules
  
+ > Docker
+ 
+## List of some modules which are important
+ - <a href="https://www.npmjs.com/package/moment">Moment</a>
+ 
  
