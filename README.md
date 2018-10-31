@@ -21,6 +21,6 @@
  - It works with a `module-alias`.
  - Command `node cli.js make: ${someOfAliasName} ${fileName}`
  ```javascript
- node clie.js make:model users
+ node cli.js make:model users
 ```
- 
+ It will create a user.js file in `app/Models` folder. You can edit a file templates in cli.js
