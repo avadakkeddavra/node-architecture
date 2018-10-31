@@ -17,5 +17,10 @@
  - <a href="https://www.npmjs.com/package/mysql-migrations">mysql-migrations</a>
  - <a href="https://github.com/hapijs/joi">Joi</a> - best choise for a validation
  - <a href="https://www.npmjs.com/package/module-alias">module-alias</a> - easy `require`
- 
+## CLI Tutorial
+ - It works with a `module-alias`.
+ - Command `node cli.js make: ${someOfAliasName} ${fileName}`
+ ```javascript
+ node clie.js make:model users
+```
  
