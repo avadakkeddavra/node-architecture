@@ -1,0 +1,38 @@
+{
+  "name": "node-architecrue",
+  "version": "1.0.0",
+  "description": "Easy start for Node.js project",
+  "main": "app.js",
+  "dependencies": {
+    "bcrypt": "^3.0.2",
+    "body-parser": "^1.18.3",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "express-mailer": "^0.3.1",
+    "file-system": "^2.2.2",
+    "joi": "^13.7.0",
+    "jsonwebtoken": "^8.3.0",
+    "module-alias": "^2.1.0",
+    "moment": "^2.22.2",
+    "mysql-migrations": "^1.0.6",
+    "mysql2": "^1.6.1",
+    "path": "^0.12.7",
+    "pug": "^2.0.3",
+    "sequelize": "^4.38.0"
+  },
+  "_moduleAliases": {
+    "@controller": "./app/Controllers",
+    "@model": "./app/Models",
+    "@middleware": "./app/Middlewares",
+    "@schema": "./app/ValidationSchemas",
+    "@service": "./app/Services",
+    "@storage": "./storage",
+    "@auth": "./app/Controllers/Auth"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "npm test"
+  },
+  "author": "Alex Solodukhin",
+  "license": "ISC"
+}
