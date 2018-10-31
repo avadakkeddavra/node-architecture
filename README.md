@@ -19,8 +19,17 @@
  - <a href="https://www.npmjs.com/package/module-alias">module-alias</a> - easy `require`
 ## CLI Tutorial
  - It works with a `module-alias`.
- - Command `node cli.js make: ${someOfAliasName} ${fileName}`
+ - Command `make`
  ```javascript
  node cli.js make:model users
 ```
  It will create a user.js file in `app/Models` folder. You can edit a file templates in cli.js
+ 
+ - Also you can use all commands from `mysql-migrations`
+ ```javascript
+ node cli.js add create_table_users
+```
+It will create a migrtion file in `database/migrations`.
+### Important
+In a `database/migration.js` you should to create a mysql connection from localhost to `db`  docker container.
+You can configure it in `.env`
