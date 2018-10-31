@@ -14,5 +14,8 @@
  
 ## List of some modules which are important
  - <a href="https://www.npmjs.com/package/moment">Moment</a> - for date parsing and formating
+ - <a href="https://www.npmjs.com/package/mysql-migrations">mysql-migrations</a>
+ - <a href="https://github.com/hapijs/joi">Joi</a> - best choise for a validation
+ - <a href="https://www.npmjs.com/package/module-alias">module-alias</a> - easy `require`
  
  
