@@ -15,12 +15,12 @@ mailer.extend(app, {
     from: process.env.MAILER_FROM,
     host: process.env.MAILER_HOST,
     secureConnection: true,
-    port: process.env.MAILER_PORT, 
+    port: process.env.MAILER_PORT,
     transportMethod: process.env.MAILER_TRANSPORT_METHOD,
     auth: {
         user: process.env.MAILER_USER,
         pass: process.env.MAILER_PASSWORD
-    }    
+    }
 });
 
 app.set('views','./resources/views');
