@@ -1,9 +1,8 @@
 const jwt = require('jsonwebtoken');
-const GlobalModel = require('@model/index');
-const User = GlobalModel.users;
+const User = require('@model/users');
 
 class AuthMiddleware {
-    
+
     auth(Request, Response, next) {
 
         if(!Request.headers.authorization) {
@@ -40,4 +39,3 @@ class AuthMiddleware {
 }
 
 module.exports = new AuthMiddleware();
-    

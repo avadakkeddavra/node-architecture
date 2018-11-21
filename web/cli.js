@@ -1,12 +1,20 @@
 const fs = require('fs');
+const path = require('path');
 const namespaces = require('./package.json')._moduleAliases;
 const argumets = process.argv;
+
+
+function ucFirst(str) {
+    if (!str) return str;
+
+    return str[0].toUpperCase() + str.slice(1);
+}
 
 function controllerTemplate(name) {
 return `
 const Controller = require('@controller/Controller');
 
-class ${name} {
+class ${name}Controller extends Controller{
     
     constructor() {
 
@@ -14,14 +22,8 @@ class ${name} {
 
 }
 
-module.exports = new ${name}();
+module.exports = new ${name}Controller();
 `;
-}
-
-function ucFirst(str) {
-    if (!str) return str;
-
-    return str[0].toUpperCase() + str.slice(1);
 }
 
 function modelTemplate(name) {
@@ -50,7 +52,7 @@ module.exports = function (sequelize,Sequelize) {
 
 function middlewareTemplate(name) {
     return `
-    class ${name} {
+    class ${name}Middleware {
         
         constructor() {
     
@@ -58,12 +60,22 @@ function middlewareTemplate(name) {
     
     }
     
-    module.exports = new ${name}();
+    module.exports = new ${name}Middleware();
     `;
 }
 
-function routeTemlate() {
-
+function serviceTemplate(name) {
+    return `
+    class ${name}Service {
+        
+        constructor() {
+    
+        }
+    
+    }
+    
+    module.exports = new ${name}Service();
+    `;
 }
 
 function getTemplate(type, name) {
@@ -79,9 +91,7 @@ function getTemplate(type, name) {
             template = middlewareTemplate(name);
             break;
         case '@service':
-            template = controllerTemplate(name);
-            break;
-        case 'route':
+            template = serviceTemplate(name);
             break;
         default:
 
@@ -96,7 +106,6 @@ function getTemplate(type, name) {
 
 }
 
-const path = require('path');
 
 function searchFile(startPath,filter){
 
@@ -151,14 +160,6 @@ for(let i = 0; i < argumets.length; i++ ) {
         } else {
             throw new Error('Wrong namespace');
         }
-    } else if(command.indexOf('add') !== -1 || 
-              command.indexOf('run') !== -1 || 
-              command.indexOf('up') !== -1 || 
-              command.indexOf('down') !== -1 || 
-              command.indexOf('refresh') !== -1)
-    {
-
-        require('./database/migration');
     }
 }
 

@@ -3,9 +3,9 @@ const Controller = require('@controller/Controller');
 /**
  * Models
  */
-const GlobalModel = require('@model/index');
-const User =  GlobalModel.users;
-const ResetPassword = GlobalModel.reset_password;
+const User = require('@model/users');
+const ResetPassword = require('@model/reset_password');
+
 /**
  * Schemas
  */
@@ -16,7 +16,7 @@ const AuthSchema = require('@schema/AuthSchema');
 const bcrypt = require('bcrypt');
 /**
  * Services
- * 
+ *
  */
 const DefaultService = require('@service/DefaultService');
 const JWTService = require('@service/JWTService');
@@ -28,13 +28,12 @@ class AuthController extends Controller{
         this.Joi.validate(Request.body, AuthSchema.login)
             .then(Data => {
                 User.findOne({
-                    where: {
-                        email: Data.email
-                    }
+                  email: Data.email
                 }).then(async user => {
 
                     if(user) {
                         const verifyPassword = await bcrypt.compare(Data.password, user.password);
+
                         if(verifyPassword) {
                             const token = JWTService.sign({
                                 name:user.name,
@@ -86,22 +85,18 @@ class AuthController extends Controller{
     requestForResetPassword(Request, Response) {
         this.Joi.validate(Request.body, AuthSchema.resetLink).then(Data => {
             User.findOne({
-                where: {
                     email: Data.email
-                } 
             }).then(async user => {
 
                 if(user) {
                     const createdRequest = await ResetPassword.findOne({
-                        where: {
-                            user_id: user.id,
-                            used: 0
-                        }
+                            user: user.id,
+                            used: false
                     });
 
                     if(!createdRequest) {
                         ResetPassword.create({
-                            user_id: user.id,
+                            user: user.id,
                             hash: DefaultService.generateRandomString(100)
                         }).then(reset => {
 
@@ -116,14 +111,14 @@ class AuthController extends Controller{
                                 }
                                 Response.send({success: true});
                             });
-                                      
+
                         }).catch(Error => {
                             Response.send(Error.stack)
                         })
                     } else {
                         Response.send({message: 'You have already requested for a reset password. Check your email and find a reset link'})
                     }
-                    
+
                 } else {
                     Response.send({success: false, message: 'There no such user with this email'})
                 }
@@ -140,14 +135,12 @@ class AuthController extends Controller{
 
     async checkResetPasswordLink(Request, Response) {
         let check = await ResetPassword.findOne({
-            where: {
                 hash: Request.params.hash,
-                used: 0
-            }
+                used: false
         });
 
         if(check) {
-            Response.send({success: true})
+            Response.send({success: true, check: check })
         } else {
             Response.send({success: false, message: 'This link has been already used'});
         }
@@ -156,12 +149,8 @@ class AuthController extends Controller{
     resetPassword(Request, Response) {
         this.Joi.validate(Request.body, AuthSchema.reset).then(Data => {
             ResetPassword.findOne({
-                where: {
-                    hash: Request.params.hash
-                },
-                include: [User]
-            }).then(reset => {
-
+                hash: Request.params.hash
+            }).populate('user').then(reset => {
                 if(reset && reset.used == 0) {
                     reset.user.update({
                         password: bcrypt.hashSync(Data.new_password, Number(process.env.SALT_ROUNDS))
@@ -173,12 +162,12 @@ class AuthController extends Controller{
                     Response.send({success: false, message: 'This reset link is unavailable'});
                 }
             }).catch(Error => {
-                Response.send(Error)
+                Response.send(Error.message)
             })
-            
+
         }).catch(Error => {
             Response.send(Error)
-        }) 
+        })
     }
 }
 

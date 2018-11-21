@@ -5,8 +5,6 @@ RUN npm install nodemon -g
 
 WORKDIR /home/project
 
-
-
 COPY ./web/package*.json ./
 RUN npm install
 

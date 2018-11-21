@@ -1,23 +1,26 @@
-version: '2'
+version: '3.1'
 
 services:
 
-  db:
-    image: mariadb
+  mongo:
+    image: mongo
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MONGO_INITDB_DATABASE: node-architecture
     volumes:
-      - ./database:/var/lib/mysql
-    ports: 
-      - 3300:3306
+      - "./database:/data/db"
+    ports:
+      - 27010:27017
 
-  adminer:
-    image: adminer
+  mongo-express:
+    image: mongo-express
     restart: always
     ports:
-      - 6080:8080
-      
+    - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_AUTH_USERNAME: root
+      ME_CONFIG_MONGODB_AUTH_PASSWORD: root
+      ME_CONFIG_MONGODB_AUTH_DATABASE: node-architecture
   web:
       build: ./
       volumes:

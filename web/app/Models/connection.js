@@ -1,19 +1,11 @@
-let Sequelize = require("sequelize");
-let sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
-    host: process.env.DB_HOST,
-    dialect: 'mysql',
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://mongo/node-architecture');
+const db = mongoose.connection;
+
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+ console.log('Db connection established successfully');
 });
 
-sequelize
-    .authenticate()
-    .then(() => {
-        console.log('Connection has been established successfully.');
-    })
-    .catch(err => {
-        console.error('Unable to connect to the database:', err);
-    });
+module.exports = db;
 
-module.exports = {
-    sequelize:sequelize,
-    Sequelize:Sequelize
-};
