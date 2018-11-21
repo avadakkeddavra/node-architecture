@@ -22,9 +22,9 @@ services:
       ME_CONFIG_MONGODB_AUTH_PASSWORD: root
       ME_CONFIG_MONGODB_AUTH_DATABASE: node-architecture
   web:
-      build: ./
+      build: ./web
       volumes:
-        - ./web:/home/project
+        - "./web:/home/project"
       ports:
           - 3000:3000
       command: nodemon app.js

@@ -46,6 +46,8 @@ class AuthController extends Controller{
                             Response.status(400);
                             Response.send({success: false, message: 'Wrong password'})
                         }
+                    } else {
+                      Response.send({success: false, message: 'No such user founded'})
                     }
 
                 }).catch(Error => {
